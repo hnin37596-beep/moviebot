@@ -64,12 +64,12 @@ def webhook():
                     ]
                 }
                 
-                # 👑 Premium Animated Emoji များ ထည့်သွင်းထားသော စာသား (HTML စနစ်)
+                # 👑 Premium Animated Emoji အစစ်အမှန်များ (ဆာဗာက ဖတ်နိုင်ရန် Single Quote ' ' သုံးထားသည်)
                 welcome_text = (
-                    "<tg-emoji emoji-id='5445284000302111844'>✨</tg-emoji> <b>Welcome to MovieBot girls</b> <tg-emoji emoji-id='5415840243299392211'>💖</tg-emoji>\n\n"
-                    "<b>မင်္ဂလာပါရှင် ရုပ်ရှင်ချစ်ပရိသတ်တို့ရေ</b> 🎬🍿\n"
-                    "ရုပ်ရှင်အသစ်စက်စက်လေးတွေနဲ့ <b>Movie Link</b> တွေကို ဒီမှာ အမြဲတင်ပေးသွားမှာမို့လို့ စောင့်မျှော်ပေးကြပါဦးနော် 🥰✨\n\n"
-                    "လင့်ခ်တွေကို အမြန်ဆုံးသိရအောင် အောက်က <tg-emoji emoji-id='5312382024765123984'>👉</tg-emoji> <b>Join Channel</b> ကိုနှိပ်ပြီး Channel ထဲဝင်ထားပေးပါဦးရှင် ချစ်မွတ်စ် <tg-emoji emoji-id='5312151664420703816'>💋</tg-emoji>"
+                    "<tg-emoji emoji-id='5445284000302111844'>✨</tg-emoji> Welcome to MovieBot girls <tg-emoji emoji-id='5415840243299392211'>💖</tg-emoji>\n\n"
+                    "မင်္ဂလာပါရှင် ရုပ်ရှင်ချစ်ပရိသတ်တို့ရေ 🎬🍿\n"
+                    "ရုပ်ရှင်အသစ်စက်စက်လေးတွေနဲ့ Movie Link တွေကို ဒီမှာ အမြဲတင်ပေးသွားမှာမို့လို့ စောင့်မျှော်ပေးကြပါဦးနော် 🥰✨\n\n"
+                    "လင့်ခ်တွေကို အမြန်ဆုံးသိရအောင် အောက်က <tg-emoji emoji-id='5312382024765123984'>👉</tg-emoji> Join Channel ကိုနှိပ်ပြီး Channel ထဲဝင်ထားပေးပါဦးရှင် ချစ်မွတ်စ် <tg-emoji emoji-id='5312151664420703816'>💋</tg-emoji>"
                 )
                 
                 sample_photo = "https://i.ibb.co/R4G6VCG5/IMG-20260516-213712.png"
