@@ -66,7 +66,7 @@ def webhook():
                 # ပုံထဲကအတိုင်း Inline Buttons ခလုတ်များ ပြင်ဆင်ခြင်း
                 welcome_buttons = {
                     "inline_keyboard": [
-                        [{"text": "🔗 Join Channel", "url": "https://t.me/your_channel_username"}],
+                        [{"text": "🔗 Join Channel 🍓", "url": "https://t.me/your_channel_username"}],
                         [{"text": "🔄 Try Again", "url": f"https://t.me/your_bot_username?start=retry"}]
                     ]
                 }
@@ -75,7 +75,7 @@ def webhook():
                 
                 # အစ်ကိုပြထားတဲ့ ပုံစံအတိုင်း Welcome Message မှာ ပြချင်တဲ့ပုံရဲ့ File ID ကို အောက်ကနေရာမှာ ထည့်ပါမယ်
                 # လောလောဆယ် စမ်းသပ်ရန် အလှပုံလင့်ခ်တစ်ခု ထည့်ပေးထားပါတယ်
-                sample_photo = "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4"
+                sample_photo = "https://i.ibb.co/R4G6VCG5/IMG-20260516-213712.png"
                 send_photo(chat_id, sample_photo, welcome_text, reply_markup=welcome_buttons)
                 
             elif text.startswith("/post"):
