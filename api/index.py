@@ -66,16 +66,24 @@ def webhook():
                 # ပုံထဲကအတိုင်း Inline Buttons ခလုတ်များ ပြင်ဆင်ခြင်း
                 welcome_buttons = {
                     "inline_keyboard": [
-                        [{"text": "🔗 Join Channel", "url": "https://t.me/your_channel_username"}],
+                        [{"text": "🔗 Join Channel 🍓", "url": "https://t.me/your_channel_username"}],
                         [{"text": "🔄 Try Again", "url": f"https://t.me/your_bot_username?start=retry"}]
                     ]
                 }
                 
-                welcome_text = "👋 **မင်္ဂလာပါဗျာ။ ကျွန်တော့် Bot ကနေ ကြိုဆိုပါတယ်။**\n\nရုပ်ရှင်ကြည့်ရှုရန် အောက်က Channel လေးကို အရင် Join ပေးပါခင်ဗျာ။\n\nTry Again ကို ပြန်နှိပ်ပေးပါ ❤️❤️❤️"
+                                welcome_text = (
+                    "✨ **𝖶𝖾𝗅𝖼𝗈𝗆𝖾 𝗍𝗈 𝖬𝗈𝗏𝗂𝖾𝖡𝗈𝗍 𝗀𝗂𝗋𝗅𝗌** 💖\n\n"
+                    "**မင်္ဂလာပါရှင်... ရုပ်ရှင်ချစ်ပရိသတ်တို့ရေ** 🎬🍿\n"
+                    "ရုပ်ရှင်အသစ်စက်စက်လေးတွေနဲ့ **Movie Link** တွေကို "
+                    "ဒီမှာ အမြဲတင်ပေးသွားမှာမို့လို့ စောင့်မျှော်ပေးကြပါဦးနော် 🥰✨\n\n"
+                    "Update Movieတွေကို အမြန်ဆုံးသိရအောင် အောက်က **\"𝖩𝗈𝗂𝗇 𝖢𝗁𝖺𝗇𝗇𝖾𝗅\"** ကိုနှိပ်ပြီး "
+                    "Channel ထဲဝင်ထားပေးပါဦးရှင်... ချစ်မွတ်စ် 💋👉👈"
+                )
+
                 
                 # အစ်ကိုပြထားတဲ့ ပုံစံအတိုင်း Welcome Message မှာ ပြချင်တဲ့ပုံရဲ့ File ID ကို အောက်ကနေရာမှာ ထည့်ပါမယ်
                 # လောလောဆယ် စမ်းသပ်ရန် အလှပုံလင့်ခ်တစ်ခု ထည့်ပေးထားပါတယ်
-                sample_photo = "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4"
+                sample_photo = "https://i.ibb.co/R4G6VCG5/IMG-20260516-213712.png"
                 send_photo(chat_id, sample_photo, welcome_text, reply_markup=welcome_buttons)
                 
             elif text.startswith("/post"):
