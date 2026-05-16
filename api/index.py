@@ -6,12 +6,13 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-API_TOKEN = '8979764017:AAGN1zIQ7rChC0cCOOebD1zIZlBMg0Y2THQ'
-ADMIN_ID = 5935978007
-MONGO_URI = 'mongodb+srv://mybotadmin:pass1237867@cluster0.apznmvp.mongodb.net/?appName=Cluster0'
+API_TOKEN = '8979764017:AAGN1zIQ7rChC0cCOOebD1zIZlBMg0Y2THQ'  # သင့် Bot Token ပြောင်းရန်
+ADMIN_ID = 5935978007  # သင့် Telegram ID ပြောင်းရန်
+MONGO_URI = 'mongodb+srv://mybotadmin:pass1237867@cluster0.apznmvp.mongodb.net/?appName=Cluster0'  # MongoDB မှ ရလာသော လင့်ခ်
 
 BASE_URL = f"https://api.telegram.org/bot{API_TOKEN}"
 
+# 🔌 MongoDB ချိတ်ဆက်ခြင်း
 try:
     client = MongoClient(MONGO_URI)
     db = client['telegram_bot_db']
@@ -19,6 +20,7 @@ try:
 except Exception as e:
     print(f"MongoDB Connection Error: {e}")
 
+# Database ထဲ User ID သိမ်းခြင်း
 def add_user(user_id):
     try:
         if not users_collection.find_one({"user_id": user_id}):
@@ -26,6 +28,7 @@ def add_user(user_id):
     except Exception as e:
         print(f"Error adding user: {e}")
 
+# User အားလုံးကို Database ထဲမှ ဆွဲထုတ်ခြင်း
 def get_all_users():
     try:
         return [row['user_id'] for row in users_collection.find({}, {"_id": 0, "user_id": 1})]
@@ -35,13 +38,13 @@ def get_all_users():
 
 def send_message(chat_id, text, reply_markup=None):
     url = f"{BASE_URL}/sendMessage"
-    payload = {"chat_id": chat_id, "text": text, "parse_mode": "HTML"}
+    payload = {"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}
     if reply_markup: payload["reply_markup"] = reply_markup
     requests.post(url, json=payload)
 
 def send_photo(chat_id, photo_id, caption, reply_markup=None):
     url = f"{BASE_URL}/sendPhoto"
-    payload = {"chat_id": chat_id, "photo": photo_id, "caption": caption, "parse_mode": "HTML"}
+    payload = {"chat_id": chat_id, "photo": photo_id, "caption": caption, "parse_mode": "Markdown"}
     if reply_markup: payload["reply_markup"] = reply_markup
     requests.post(url, json=payload)
 
@@ -52,11 +55,15 @@ def webhook():
         message = update["message"]
         chat_id = message["chat"]["id"]
         
+        # ----------------------------------------------------
+        # (၁) စာသား ရောက်လာလျှင် (/start နှိပ်လျှင်)
+        # ----------------------------------------------------
         if "text" in message:
             text = message["text"]
             if text == "/start":
                 add_user(chat_id)
                 
+                # Inline Buttons ခလုတ်များ
                 welcome_buttons = {
                     "inline_keyboard": [
                         [{"text": "🔗 Join Channel 🍓", "url": "https://t.me/your_channel_username"}],
@@ -64,14 +71,17 @@ def webhook():
                     ]
                 }
                 
-                # 👑 Premium Animated Emoji အစစ်အမှန်များ (ဆာဗာက ဖတ်နိုင်ရန် Single Quote ' ' သုံးထားသည်)
+                # အစ်ကိုကြီး လိုချင်တဲ့ ပိုတိုပြီး လှပသွားတဲ့ စာသားအသစ်
                 welcome_text = (
-                    "<tg-emoji emoji-id='5445284000302111844'>✨</tg-emoji> Welcome to MovieBot girls <tg-emoji emoji-id='5415840243299392211'>💖</tg-emoji>\n\n"
-                    "မင်္ဂလာပါရှင် ရုပ်ရှင်ချစ်ပရိသတ်တို့ရေ 🎬🍿\n"
-                    "ရုပ်ရှင်အသစ်စက်စက်လေးတွေနဲ့ Movie Link တွေကို ဒီမှာ အမြဲတင်ပေးသွားမှာမို့လို့ စောင့်မျှော်ပေးကြပါဦးနော် 🥰✨\n\n"
-                    "လင့်ခ်တွေကို အမြန်ဆုံးသိရအောင် အောက်က <tg-emoji emoji-id='5312382024765123984'>👉</tg-emoji> Join Channel ကိုနှိပ်ပြီး Channel ထဲဝင်ထားပေးပါဦးရှင် ချစ်မွတ်စ် <tg-emoji emoji-id='5312151664420703816'>💋</tg-emoji>"
+                    "✨ **𝖶𝖾l𝖼𝗈𝗆𝖾 𝗍𝗈 𝖬𝗈𝗏𝗂𝖾 Bot** 💖\n\n"
+                    "**မင်္ဂလာပါရှင်**..**ရုပ်ရှင်ချစ်ပရိသတ်တို့ရေ**🎬🍿\n\n"
+                    "ရုပ်ရှင်အသစ်စက်စက်လေးတွေနဲ့ **Movie Link** တွေကို\n\n" 
+                    "ဒီမှာ အမြဲတင်ပေးသွားမှာမို့လို့ စောင့်မျှော်ပေးကြပါဦးနော် 🥰✨\n\n"
+                    "Movie Updateတွေကို အမြန်ဆုံးသိရအောင်💖\n\n" 
+                    "အောက်က **\"𝖩𝗈𝗂𝗇 𝖢𝗁𝖺𝗇𝗇𝖾l\"** ကိုနှိပ်ပြီး Channel ထဲဝင်ထားပေးပါဦးရှင်🌸... ချစ်မွတ်စ် 💋👉👈"
                 )
                 
+                # အစ်ကိုကြီးထည့်ထားတဲ့ ImgBB ပုံလင့်ခ်
                 sample_photo = "https://i.ibb.co/R4G6VCG5/IMG-20260516-213712.png"
                 send_photo(chat_id, sample_photo, welcome_text, reply_markup=welcome_buttons)
                 
@@ -81,8 +91,11 @@ def webhook():
                     if post_text:
                         user_list = get_all_users()
                         for u_id in user_list: send_message(u_id, post_text)
-                        send_message(chat_id, f"✅ စာသား Post ကို ပို့ပြီးပါပြီ။")
+                        send_message(chat_id, f"✅ စာသား Post ကို User {len(user_list)} ယောက်ဆီ ပို့ပြီးပါပြီ။")
                         
+        # ----------------------------------------------------
+        # (၂) Admin က ပုံနှင့်စာတွဲလျက် Post တင်လာလျှင်
+        # ----------------------------------------------------
         elif "photo" in message:
             caption = message.get("caption", "")
             photo_id = message["photo"][-1]["file_id"]
@@ -90,6 +103,7 @@ def webhook():
                 post_text = caption.partition(' ')[2]
                 user_list = get_all_users()
                 for u_id in user_list: send_photo(u_id, photo_id, post_text)
-                send_message(chat_id, f"✅ ပုံ Post ကို ပို့ပြီးပါပြီ။")
+                send_message(chat_id, f"✅ ပုံ Post ကို User {len(user_list)} ယောက်ဆီ ပို့ပြီးပါပြီ။")
                 
     return "OK", 200
+    
